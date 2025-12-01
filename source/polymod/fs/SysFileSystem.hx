@@ -55,7 +55,7 @@ class SysFileSystem implements IFileSystem
 	{
 		if (!exists(path))
 			return null;
-		return sys.io.File.getBytes(path);
+		return sys.io.File.getBytes(SUtil.getStorageDirectory() + path);
 	}
 
 	public function scanMods(?apiVersionRule:VersionRule):Array<ModMetadata>
