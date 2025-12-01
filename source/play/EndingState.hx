@@ -141,11 +141,17 @@ class EndingState extends MusicBeatState
 		FlxG.camera.fade(FlxColor.BLACK, 0.8, true);
 	}
 
+	var justTouched:Bool = false;
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 
-		if (controls.ACCEPT)
+		for (touch in FlxG.touches.list)
+			if (touch.justPressed)
+				justTouched = true;
+
+		if (controls.ACCEPT #if mobile || justTouched #end)
 		{
 			endIt();
 		}

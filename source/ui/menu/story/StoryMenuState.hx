@@ -241,6 +241,9 @@ class StoryMenuState extends MusicBeatState
 		{
 			changeWeek(0);
 		}
+		#if mobileC
+		addVirtualPad(LEFT_RIGHT, A_B);
+		#end
 		super.create();
 	}
 
@@ -273,7 +276,7 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.justPressed.SEVEN && !FlxG.save.data.masterWeekUnlocked && canInteract)
+		if (FlxG.keys.justPressed.SEVEN #if android || FlxG.android.justReleased.BACK #end && !FlxG.save.data.masterWeekUnlocked && canInteract)
 		{
 			canInteract = false;
 			SoundController.music.fadeOut(1, 0);

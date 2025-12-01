@@ -149,6 +149,11 @@ class PauseSubState extends MusicBeatSubstate
 		generatePauseOptions();
 		changeSelection();
 		setupPauseCamera();
+		
+
+		#if mobileC
+		addVirtualPad(UP_DOWN, A_B);
+		#end
 	}
 
 	override function update(elapsed:Float)

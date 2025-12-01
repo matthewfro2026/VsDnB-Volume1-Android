@@ -29,13 +29,15 @@ import util.FileUtil;
 import util.GradientUtil;
 import util.TweenUtil;
 
+import mobile.controls.MobileControlsSubState;
+
 enum SelectState
 {
 	SelectingCategory;
 	SelectingOption;
 }
 
-class SettingsMenu extends FlxSubState
+class SettingsMenu extends MusicBeatSubstate // a fix for now?
 {
 	static var curCategorySelection:Int = 0;
 	
@@ -127,6 +129,11 @@ class SettingsMenu extends FlxSubState
 		camera.bgColor.alpha = 0;
 
 		FlxG.cameras.add(camera, false);
+
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B_C);
+		addVirtualPadCamera();
+		#end
 	}
 
 	public function init()
@@ -188,6 +195,10 @@ class SettingsMenu extends FlxSubState
 		var upP = PlayerSettings.controls.UP_P;
 		var back = PlayerSettings.controls.BACK;
 
+		#if mobileC
+		var mobileControls = virtualPad.buttonC.justPressed;
+		#end
+
 		switch (curState)
 		{
 			case SelectingCategory:
@@ -247,6 +258,12 @@ class SettingsMenu extends FlxSubState
 		{
 			closeClipboard();
 		}
+		#if mobileC
+		if (mobileControls)
+		{
+			openSubState(new MobileControlsSubState()); // ahh so cool
+		}
+		#end
 	}
 
 	public override function close()

@@ -299,6 +299,10 @@ class CharacterSelect extends MusicBeatState
 		updatePageDisplay();
 		updateSelection();
 
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B);
+		#end	
+
 		super.create();
 	}
 
@@ -312,6 +316,7 @@ class CharacterSelect extends MusicBeatState
 
 			if (firstPressed != -1)
 			{
+				#if desktop
 				for (control => key in selectControls)
 				{
 					if (firstPressed == key)
@@ -330,6 +335,16 @@ class CharacterSelect extends MusicBeatState
 						}
 					}
 				}
+				#else
+				if (virtualPad.buttonLeft.justPressed)
+					changeRowSelection(-1);
+				if (virtualPad.buttonRight.justPressed)
+					changeRowSelection(1);
+				if (virtualPad.buttonUp.justPressed)
+					changeColumnSelection(-1);
+				if (virtualPad.buttonDown.justPressed)
+					changeColumnSelection(1);
+				#end
 
 				if (singControls.contains(firstPressed))
 				{

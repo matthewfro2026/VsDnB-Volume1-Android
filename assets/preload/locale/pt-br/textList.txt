@@ -6,6 +6,7 @@ intro_warning==AVISO!:linebreak:Esse mod contém shaders e outros efeitos que po
 
 // TITLE STATE
 title_pressEnter==Pressione Enter para Jogar
+title_pressEnter_mobile==Toque na tela para Jogar
 
 // Main Menu State //
 main_story==Modo História

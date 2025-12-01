@@ -7,6 +7,7 @@ intro_warning_mobile==WARNING!:linebreak:This mod contains shaders and effects t
 
 // TITLE STATE
 title_pressEnter==Press Enter To Play
+title_pressEnter_mobile==Tap the screen To Play
 
 // Main Menu State //
 main_story==Story Mode

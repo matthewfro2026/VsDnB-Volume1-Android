@@ -12,6 +12,7 @@ class Options_Window extends SettingsCategory
 
 	public override function init()
 	{
+		#if desktop
 		checkbox_darkMode = new CheckboxOption(400, 600, {
 			name: LanguageManager.getTextString('settings_window_darkMode'),
 			description: LanguageManager.getTextString('settings_window_darkMode_description'),
@@ -22,6 +23,7 @@ class Options_Window extends SettingsCategory
 		});
 		checkbox_darkMode.setChecked(Preferences.darkMode, false, true);
 		checkbox_darkMode.canInteract = !Preferences.borderless;
+		#end
 
 		stepper_fps = new NumericStepperOption(375, 300, {
 			name: LanguageManager.getTextString('settings_window_fps'),
@@ -67,9 +69,11 @@ class Options_Window extends SettingsCategory
 		list.push(checkbox_vsync);
 		add(checkbox_vsync);
 
+		#if desktop
 		// Make sure this gets added last so it fits last in the group.
 		list.push(checkbox_darkMode);
 		add(checkbox_darkMode);
+		#end
 	}
 	
 	override function getName():String

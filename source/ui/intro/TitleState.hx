@@ -58,7 +58,7 @@ class TitleState extends MusicBeatState
 		#if android
 		FlxG.android.preventDefaultKeys = [BACK]; // lol
 		#end
-		
+
 		if (FlxG.random.int(0, 999) == 1)
 			LoadingState.loadAndSwitchState(() -> new SusState());
 
@@ -105,7 +105,11 @@ class TitleState extends MusicBeatState
 		version.angle = -3;
 		add(version);
 
+		#if desktop
 		pressEnter = new FlxText(0, 600, 0, LanguageManager.getTextString('title_pressEnter'), 20);
+		#else
+		pressEnter = new FlxText(0, 600, 0, LanguageManager.getTextString('title_pressEnter_mobile'), 20);
+		#end
 		pressEnter.setFormat(Paths.font('comic.ttf'), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		pressEnter.screenCenter(X);
 		pressEnter.borderSize = 3;

@@ -275,7 +275,9 @@ class TerminalScreen extends FlxSprite
 				this.SetCharacter(x, y, 0, TerminalColor.DARK_WHITE, TerminalColor.BLACK);
 			}
 		}
+		#if !mobile
 		Main.fps.visible = false; // todo: ask how to set this back lol
+		#end
 	}
 
 	public function Clear()

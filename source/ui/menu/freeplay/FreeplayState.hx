@@ -326,6 +326,10 @@ class FreeplayState extends MusicBeatState
 		add(grpSongs);
 		add(grpIcons);
 
+		#if mobileC
+		addVirtualPad(LEFT_FULL, A_B);
+		#end
+
 		super.create();
 	}
 	

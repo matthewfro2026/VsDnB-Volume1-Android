@@ -655,6 +655,10 @@ class PlayState extends MusicBeatState
 		initStage();
 		initCharacters();
 
+		#if mobileC
+		initalizeMobileControls();
+		#end
+
 		initalizeCamera();
 
 		initalizeUI();
@@ -1260,6 +1264,17 @@ class PlayState extends MusicBeatState
 
 		camGameZoom = new CamZoomManager(camGame, 0.015);
 		camHUDZoom = new CamZoomManager(camHUD, 0.03);
+	}
+
+	/**
+	 * Initalizes mobile controls.
+	**/
+	function initalizeMobileControls():Void
+	{
+		#if mobileC
+		addMobileControls();
+		mobileControls.visible = true;
+		#end
 	}
 
 	/**

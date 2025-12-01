@@ -14,6 +14,8 @@ import mobile.controls.flixel.FlxButton;
 import mobile.controls.flixel.FlxHitbox;
 import mobile.controls.flixel.FlxVirtualPad;
 import openfl.utils.Assets;
+import util.GradientUtil;
+import util.FileUtil;
 
 class MobileControlsSubState extends FlxSubState
 {
@@ -34,17 +36,20 @@ class MobileControlsSubState extends FlxSubState
 	private var bindButton:FlxButton;
 	private var resetButton:FlxButton;
 
+	var bg:FlxSprite;
+
 	override function create()
 	{
 		for (i in 0...controlsItems.length)
 			if (controlsItems[i] == MobileControls.mode)
 				curSelected = i;
 
-		var bg:FlxSprite = new FlxSprite(0,
-			0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(FlxG.random.int(0, 255), FlxG.random.int(0, 255), FlxG.random.int(0, 255)));
-		bg.scrollFactor.set();
-		bg.alpha = 0.4;
+		bg = new FlxSprite().loadGraphic(FileUtil.randomizeBG());
+		bg.setGraphicSize(FlxG.width, FlxG.height);
+		bg.updateHitbox();
+		bg.screenCenter();
 		add(bg);
+		GradientUtil.applyGradientToSprite(bg, [FlxColor.GREEN, FlxColor.BLUE]);
 
 		var exitButton:FlxButton = new FlxButton(FlxG.width - 200, 50, 'Exit', function()
 		{

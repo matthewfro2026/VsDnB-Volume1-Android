@@ -13,6 +13,7 @@ import util.SortUtil;
 import mobile.controls.MobileControls;
 import mobile.controls.flixel.FlxVirtualPad;
 import flixel.FlxCamera;
+import graphics.GameCamera;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
@@ -103,7 +104,7 @@ class MusicBeatState extends ScriptEventDispatchState
 		trackedInputsMobileControls = controls.trackedInputsNOTES;
 		controls.trackedInputsNOTES = [];
 
-		var camControls:FlxCamera = new FlxCamera();
+		var camControls:GameCamera = new GameCamera();
 		camControls.bgColor.alpha = 0;
 		FlxG.cameras.add(camControls, DefaultDrawTarget);
 
@@ -125,7 +126,7 @@ class MusicBeatState extends ScriptEventDispatchState
 	{
 		if (virtualPad != null)
 		{
-			var camControls:FlxCamera = new FlxCamera();
+			var camControls:FlxCamera = new GameCamera();
 			camControls.bgColor.alpha = 0;
 			FlxG.cameras.add(camControls, DefaultDrawTarget);
 			virtualPad.cameras = [camControls];
