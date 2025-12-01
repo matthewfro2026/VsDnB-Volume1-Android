@@ -52,7 +52,7 @@ Share bugs via the Issues tab, this will help alot during the port.
 Anyways, if you see this:
 [Screenshot](https://media.discordapp.net/attachments/1323021749973024768/1444804638665736312/Screenshot_2025-11-30_213549.png?ex=692eb36d&is=692d61ed&hm=051d1e2fa700770711536a4236daf803160b5e361d4e6c0576e6cfaf77c221f6&=&format=webp&quality=lossless&width=1426&height=800)
 
-That means the app has installed successfully.
+That means the app has installed successfully, but needs to do certain steps to actually play the game.
 
 Steps to play:
 1. Download an file explorer, such as "ZArchiver".
