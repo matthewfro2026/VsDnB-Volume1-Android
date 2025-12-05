@@ -21,8 +21,8 @@
 	<!--macOS-->
 	<window if="mac" orientation="auto" fullscreen="false" resizable="true" vsync="false" allow-high-dpi="true" />
 
-	<!--Mobile-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="1280" height="720" resizable="false"/>
+	<!--Mobile-specific-->
+	<window if="mobile" orientation="landscape" fullscreen="false" width="1280" height="720" resizable="false"/>
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<classpath name="source" />
