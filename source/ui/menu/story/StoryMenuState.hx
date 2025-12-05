@@ -103,8 +103,6 @@ class StoryMenuState extends MusicBeatState
 
 	override function create()
 	{
-		if (FlxG.save.data.masterWeekUnlocked)
-		{
 			var weekName:String = !FlxG.save.data.hasPlayedMasterWeek ? LanguageManager.getTextString('story_masterWeekToPlay') : LanguageManager.getTextString('story_masterWeek');
 
 			// MASTERA BAMBI			
@@ -114,8 +112,7 @@ class StoryMenuState extends MusicBeatState
 			});
 
 			weeks.push(jokeWeek);
-		}
-
+		
 		#if desktop
 		DiscordClient.changePresence("In the Story Menu", null);
 		#end
@@ -276,7 +273,7 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.justPressed.SEVEN #if mobile || FlxG.mobile.justReleased.BACK #end && !FlxG.save.data.masterWeekUnlocked && canInteract)
+		if (FlxG.keys.justPressed.SEVEN && !FlxG.save.data.masterWeekUnlocked && canInteract)
 		{
 			canInteract = false;
 			SoundController.music.fadeOut(1, 0);
