@@ -276,7 +276,7 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.justPressed.SEVEN #if mobile || FlxG.android.justReleased.BACK #end && !FlxG.save.data.masterWeekUnlocked && canInteract)
+		if (FlxG.keys.justPressed.SEVEN #if mobile || FlxG.mobile.justReleased.BACK #end && !FlxG.save.data.masterWeekUnlocked && canInteract)
 		{
 			canInteract = false;
 			SoundController.music.fadeOut(1, 0);
