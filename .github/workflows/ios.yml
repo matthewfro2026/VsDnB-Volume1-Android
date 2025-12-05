@@ -44,6 +44,9 @@ jobs:
           haxelib git hscript https://github.com/T5mpler/hscript-dnb
           haxelib install hxvlc
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib install hmm
+          haxelib run hmm setup
+          hmm install
 
       - name: Generate iOS C++
         run: |
