@@ -226,10 +226,8 @@ public var botplayEnabled:Bool = false;
 private var botplayTxt:FlxText;
 public static var botplay:Bool = false;
 
-// =======================================================
-// Basic botplay hit helper
-// =======================================================
-private function botplayHit(note:Note):Void {
+private function botplayHit(note:Note)
+{
     // Mark as hit
     note.hasBeenHit = true;
 
@@ -237,50 +235,50 @@ private function botplayHit(note:Note):Void {
     playingStrumline.hitNote(note);
 
     // Trigger player animation
-    if (playingChar != null) {
+    if (playingChar != null)
+    {
         playingChar.sing(note.direction);
         playingChar.holdTimer = 0;
     }
 }
 
-// =======================================================
-// FULL AUTO PLAYER / D&B STYLE BOTPLAY
-// =======================================================
-public function botplayAutoHit():Void {
+/**
+ * Auto-player for D&B engine (FULL + FIXED FOR SUSTAINS)
+ */
+public function botplayAutoHit()
+{
     if (playerStrums == null)
         return;
 
     // Show BOTPLAY text
     botplayTxt.visible = true;
 
-    // 1. ALL hittable tap notes
+    // 1. ALL hittable "tap" notes
     var possible:Array<Note> = playerStrums.getPossibleNotes();
 
-    // Sort closest → farthest
-    haxe.ds.ArraySort.sort(possible, function(a, b) {
+    // Sort closest → furthest
+    haxe.ds.ArraySort.sort(possible, function(a, b)
+    {
         return Reflect.compare(
             Math.abs(Conductor.instance.songPosition - a.strumTime),
             Math.abs(Conductor.instance.songPosition - b.strumTime)
         );
     });
 
-    // ==================================================
-    // TAP NOTES
-    // ==================================================
-    for (note in possible) {
+    // ================================
+    //  TAP NOTES
+    // ================================
+    for (note in possible)
+    {
         if (note == null) continue;
         if (note.hasBeenHit) continue;
 
-        // SUSTAIN HEAD
-        if (note.sustainNote != null && note.isSustainHead) {
+        // SUSTAIN HEAD (first part)
+        if (note.sustainNote != null)
+        {
+            // Hit the head
             playerStrums.pressKey(note.direction);
             playerStrums.hitNote(note);
-            continue;
-        }
-
-        // PHONE NOTE
-        if (note.noteStyle == "phone") {
-            botplayPhoneHit(note);
             continue;
         }
 
@@ -288,28 +286,118 @@ public function botplayAutoHit():Void {
         playerStrums.pressKey(note.direction);
         playerStrums.hitNote(note);
         playerStrums.releaseKey(note.direction);
-    } // <-- THIS } closes TAP NOTES loop
+    }
 
-    // ==================================================
-    // SUSTAIN NOTE HOLDING
-    // ==================================================
-    playerStrums.forEachHoldNote(function(s:SustainNote) {
-        if (s == null) return var now = Conductor.instance.songPosition;
+    // ================================
+    //  SUSTAIN NOTE HOLDING
+    // ================================
+    playerStrums.forEachHoldNote(function(s:SustainNote)
+    {
+        if (s == null) return;
+
+        var now = Conductor.instance.songPosition;
+
+        // Sustain active window
         var start = s.strumTime;
-        var end   = s.strumTime + s.length;
+        var end   = s.strumTime + s.fullSustainLength;
 
-        var active = now >= start && now <= end;
-
-        if (active && !s.wasGoodHit) {
+        if (now >= start && now <= end)
+        {
+            // Hold key while inside sustain window
             playerStrums.pressKey(s.direction);
-            playerStrums.hitHoldNote(s);
-        }
 
-        if (!active && s.wasGoodHit) {
+            if (!s.hasBeenHit)
+            {
+                s.hasBeenHit = true;
+                s.hasMissed = false;
+            }
+
+            // Play strum hold animation
+            playerStrums.strums.members[s.direction].holdConfirm();
+        }
+        else if (now > end)
+        {
+            // Release key when sustain ends
             playerStrums.releaseKey(s.direction);
         }
-    }); // <-- fully closes sustain callback
-} // <-- FINALLY closes botplayAutoHit
+    });
+}
+
+/**
+ * Automatically plays notes for the player strumline.
+ */
+ 
+public var strumlineOpponent:Strumline;
+public var strumlinePlayer:Strumline;
+
+function updateBotplay(elapsed:Float)
+{
+    if (!botplay) return;
+
+    // Your player strumline:
+    var pl:Strumline = strumlinePlayer; // adjust if player index differs
+
+    // Get all notes that are hittable
+    var possibleNotes:Array<Note> = pl.getPossibleNotes();
+
+    // Sort by closest to hit
+    possibleNotes.sort(function(a, b) {
+        return Reflect.compare(
+            Math.abs(Conductor.instance.songPosition - a.strumTime),
+            Math.abs(Conductor.instance.songPosition - b.strumTime)
+        );
+    });
+
+    // ---- HIT TAPS ----
+    for (note in possibleNotes)
+    {
+        if (note == null) continue;
+        if (note.hasBeenHit) continue;
+
+        // Tap note (no sustain)
+        if (note.sustainNote == null)
+        {
+            pl.pressKey(note.direction);
+            pl.hitNote(note);
+            pl.releaseKey(note.direction);
+        }
+        else
+        {
+            // HIT START OF HOLD
+            if (!note.sustainNote.hasBeenHit)
+            {
+                pl.pressKey(note.direction);
+                pl.hitNote(note);
+            }
+        }
+    }
+
+    // ---- HOLD SUSTAINS ----
+    pl.forEachHoldNote(function(hold:SustainNote)
+    {
+        if (hold == null) return;
+
+        var now = Conductor.instance.songPosition;
+
+        // Sustain active window
+        if (now >= hold.strumTime && now <= hold.strumTime + hold.fullSustainLength)
+        {
+            // keep key held
+            pl.pressKey(hold.direction);
+
+            if (!hold.hasBeenHit)
+            {
+                hold.hasBeenHit = true;
+                hold.hasMissed = false;
+            }
+        }
+        else
+        {
+            // release when finished
+            pl.releaseKey(hold.direction);
+        }
+    });
+}
 
 	function set_scrollType(value:String):String
 	{
