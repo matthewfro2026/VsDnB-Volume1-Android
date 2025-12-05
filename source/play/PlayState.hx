@@ -560,6 +560,30 @@ if (note.sustainNote == null)
     });
 }
 
+	/**
+ * Handles the "start" of a sustain note hold.
+ */
+public function beginSustain(note:Note)
+{
+    var sus:SustainNote = note.sustainNote;
+    if (sus == null) return;
+
+    sus.hasBeenHit = true;
+
+    // score & health
+    addScore(50);
+    health += 0.005;
+
+    // play hold animation
+    if (sus.strum != null)
+        sus.strum.holdConfirm();
+}
+
+public inline function getHitWindow(note:Note):Float
+{
+    return Preferences.hitWindow ?? 155;
+}
+
 	function set_scrollType(value:String):String
 	{
 		if (dadStrums != null)
