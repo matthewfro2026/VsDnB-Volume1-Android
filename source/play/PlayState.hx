@@ -751,14 +751,29 @@ public function botplayAutoHit():Void {
 		
 		var font:String = Paths.font("comic.ttf");
 
-		botplayTxt = new FlxText(healthBar.x + healthBar.width / 2 - 75, healthBar.y + (FlxG.save.data.downscroll ? 100 : -100), 0,;
-		"BOTPLAY", 20);
- botplayTxt.setFormat(Paths.font("comic.ttf"), 42, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
-		botplayTxt.scrollFactor.set();
-		botplayTxt.borderSize = 3;
-		botplayTxt.visible = botplay;
- botplayTxt.cameras = [camHUD];
-		add(botplayTxt);
+botplayTxt = new FlxText(
+    healthBar.x + healthBar.width / 2 - 75,
+    healthBar.y + (FlxG.save.data.downscroll ? 100 : -100),
+    0,
+    "BOTPLAY",
+    20
+);
+
+botplayTxt.setFormat(
+    Paths.font("comic.ttf"),
+    42,
+    FlxColor.WHITE,
+    CENTER,
+    OUTLINE,
+    FlxColor.BLACK
+);
+
+botplayTxt.scrollFactor.set(0, 0); // must supply values
+botplayTxt.borderSize = 3;
+botplayTxt.visible = botplay;
+botplayTxt.cameras = [camHUD];
+
+add(botplayTxt);
 
 		generateSong();
 
