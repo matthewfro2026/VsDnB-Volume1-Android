@@ -3,11 +3,13 @@ es-US==Spanish
 pt-br==Brazilian-Portuguese
 
 intro_warning==WARNING!:linebreak:This mod contains shaders and effects that could trigger seizures, shaking or any similar issues.:linebreak::linebreak:Make sure to head to the options menu (located on the main menu and pause menu) for accessibility options. :linebreak::linebreak:Language options are also available.:linebreak::linebreak:(Press ENTER to continue.)
-intro_warning_mobile==WARNING!:linebreak:This mod contains shaders and effects that could trigger seizures, shaking or any similar issues.:linebreak::linebreak:Make sure to head to the options menu (located on the main menu and pause menu) for accessibility options. :linebreak::linebreak:Language options are also available.:linebreak::linebreak:(Tap the screen to continue.)
 
 // TITLE STATE
 title_pressEnter==Press Enter To Play
-title_pressEnter_mobile==Tap the screen To Play
+
+botplay_text==BOTPLAY
+botplay_enabled==Botplay Enabled
+botplay_disabled==Botplay Disabled
 
 // Main Menu State //
 main_story==Story Mode
@@ -128,6 +130,9 @@ settings_general_cutscenes_description==Toggles cutscenes and dialogue in story 
 
 settings_general_keybinds==Configure Keybinds
 settings_general_keybinds_description==Assign and configure keys for inputs.
+
+settings_general_botplay==Botplay
+settings_general_botplay_description==Automatically plays notes for you. Disables scoring.
 
 
 // Accessibility

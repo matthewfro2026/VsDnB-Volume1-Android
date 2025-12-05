@@ -6,7 +6,10 @@ intro_warning==AVISO!:linebreak:Esse mod contém shaders e outros efeitos que po
 
 // TITLE STATE
 title_pressEnter==Pressione Enter para Jogar
-title_pressEnter_mobile==Toque na tela para Jogar
+
+botplay_text==BOTPLAY
+pause_Botplay==Botplay
+pause_Botplay_description==Permite que o computador jogue as notas por você.
 
 // Main Menu State //
 main_story==Modo História
@@ -126,6 +129,9 @@ settings_general_cutscenes_description==Liga ou desliga cutscenes e diálogos no
 
 settings_general_keybinds==Configurar Teclas
 settings_general_keybinds_description==Atribua e configure teclas para os inputs.
+
+settings_general_botplay==Botplay
+settings_general_botplay_description==Toca as notas automaticamente por você. Desativa a pontuação.
 
 
 // ACCESSABILITY
