@@ -281,11 +281,35 @@ public function botplayAutoHit()
             playerStrums.hitNote(note);
             continue;
         }
+		// BOTPLAY NOTE LOGIC WITH PHONE SUPPORT
+playerStrums.pressKey(note.direction);
+playerStrums.hitNote(note);
 
-        // NORMAL NOTE
-        playerStrums.pressKey(note.direction);
-        playerStrums.hitNote(note);
-        playerStrums.releaseKey(note.direction);
+// --- PHONE NOTE DODGE PATCH ---
+if (note.noteStyle == "phone" || note.noteStyle == "phone-alt")
+{
+    // play BF/Player dodge animation
+    if (playingChar.animation.getByName("dodge") != null)
+        playingChar.playAnim("dodge", true);
+    else if (playingChar.animation.getByName("hey") != null)
+        playingChar.playAnim("hey", true);
+    else
+        playingChar.sing(note.direction); // fallback
+
+    // play opponent (dad) throwing animation
+    if (opposingChar.animation.getByName("singThrow") != null)
+        opposingChar.playAnim("singThrow", true);
+    else
+        opposingChar.playAnim("singSmash", true);
+
+    // GF cheer if she can
+    if (gf != null && gf.animation.getByName("cheer") != null)
+        gf.playAnim("cheer", true);
+}
+// --------------------------------
+
+playerStrums.releaseKey(note.direction);
+
     }
 
     // ================================
@@ -353,14 +377,31 @@ function updateBotplay(elapsed:Float)
     {
         if (note == null) continue;
         if (note.hasBeenHit) continue;
+if (note.sustainNote == null)
+{
+    pl.pressKey(note.direction);
+    pl.hitNote(note);
 
-        // Tap note (no sustain)
-        if (note.sustainNote == null)
-        {
-            pl.pressKey(note.direction);
-            pl.hitNote(note);
-            pl.releaseKey(note.direction);
-        }
+    // --- PHONE NOTE AUTO-DODGE ---
+    if (note.noteStyle == "phone" || note.noteStyle == "phone-alt")
+    {
+        if (playingChar.animation.getByName("dodge") != null)
+            playingChar.playAnim("dodge", true);
+        else if (playingChar.animation.getByName("hey") != null)
+            playingChar.playAnim("hey", true);
+
+        if (opposingChar.animation.getByName("singThrow") != null)
+            opposingChar.playAnim("singThrow", true);
+        else
+            opposingChar.playAnim("singSmash", true);
+
+        if (gf != null && gf.animation.getByName("cheer") != null)
+            gf.playAnim("cheer", true);
+    }
+    // -----------------------------
+
+    pl.releaseKey(note.direction);
+}
         else
         {
             // HIT START OF HOLD
