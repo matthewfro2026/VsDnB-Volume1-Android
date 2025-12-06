@@ -21,8 +21,8 @@
 	<!--macOS-->
 	<window if="mac" orientation="auto" fullscreen="false" resizable="true" vsync="false" allow-high-dpi="true" />
 
-	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="false" width="1280" height="720" resizable="false"/>
+	<!--Mobile-->
+	<window if="mobile" orientation="landscape" fullscreen="true" width="1280" height="720" resizable="false"/>
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<classpath name="source" />
@@ -74,7 +74,7 @@
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
-	<haxelib name="hxvlc" if="desktop || mobile" />
+	<haxelib name="hxvlc" if="desktop || android" />
 	<haxelib name="hscript" />
 	<haxelib name="polymod" />
 	<haxelib name="json2object" />
@@ -142,6 +142,15 @@
         	<android abi="arm64-v8a"/>
     	</config>
 	</section>
+
+	<android>
+    	<manifest-addition>
+        	<![CDATA[
+        	<application android:requestLegacyExternalStorage="true">
+        	</application>
+        	]]>
+    	</manifest-addition>
+	</android>
 
 	<!-- _________________________________ Custom _______________________________ -->
 
