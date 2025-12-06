@@ -35,6 +35,7 @@ freeplay_extra==Extra
 freeplay_score==Score
 freeplay_altInstrumental==Pressione Alt Para Ouvir O Instrumental Da Música Atual
 freeplay_skipChar==Segure CTRL Para Pular A Seleção De Personagens
+freeplay_skipChar_mobile==Segure pressionada a botão C Para Pular A Seleção De Personagens
 
 supernovae_hint==Você é um pro no Dave e Bambi? Aperte 7 em algum lugar e vença meu desafio para ganhar.
 glitch_hint==Você é um pro no Dave e Bambi? Aperte 7 em algum lugar e vença meu desafio para ganhar.
