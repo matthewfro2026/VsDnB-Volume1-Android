@@ -37,6 +37,7 @@ freeplay_extra==Extra
 freeplay_score==Score
 freeplay_altInstrumental==Presiona Alt para reproducir el instrumental de la canción actual. 
 freeplay_skipChar==Mantén CTRL para saltar el selector de personaje 
+freeplay_skipChar_mobile==Mantén presionado el botón C para saltar el selector de personaje
  
 supernovae_hint==¿Te crees bien vergas con Dave and Bambi? Presiona 7 en cualquier momento y derrota mi challenge para ganar. 
 glitch_hint==¿Te crees bien vergas con Dave and Bambi? Presiona 7 en cualquier momento y derrota mi challenge para ganar. 
