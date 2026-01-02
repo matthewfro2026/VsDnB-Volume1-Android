@@ -2622,6 +2622,7 @@ if (cpuControlled)
 	 * Changes the Discord Rich Presence based on a specific type.
 	 * @param type The type to change it based off.
 	 */
+	#if desktop
 	function changePresence(type:api.Discord.RPCType):Void
 	{
 		if (currentChart == null)
@@ -2652,6 +2653,7 @@ if (cpuControlled)
 				DiscordClient.changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp, largeImageKey);
 		}
 	}
+	#end
 
 	/**
 	 * Handles the singing for an opponent character.
@@ -2735,3 +2737,4 @@ if (cpuControlled)
 		updateAccuracy();
 	}
 }
+
