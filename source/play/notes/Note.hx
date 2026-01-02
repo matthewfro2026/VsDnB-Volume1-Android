@@ -19,7 +19,7 @@ class Note extends FlxSprite
 	/**
 	 * The default color directions for 4-key notes.
 	 */
-	public static var COLOR_DIRECTIONS = ['purple', 'blue', 'green', 'red'];
+	public static var COLOR_DIRECTIONS = ['purple', 'blue', 'green', 'red', 'pink', 'turq', 'emerald', 'lightred', 'yellow', 'violet', 'black', 'white', 'orange', 'dark'];
 
 	/**
 	 * Whether the note's position should be controlled through trigonometric rotation.

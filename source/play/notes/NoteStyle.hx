@@ -30,6 +30,7 @@ abstract NoteStyle(String) from String to String
 			case 'phone' | 'phone-alt': 'phone/NOTE_phone';
 			case 'top10': 'top10/OMGtop10awesomehi';
 			case 'pixel': 'pixel/NOTE_pixel';
+			case 'dde': 'dde/NOTE_assets';
 			default: 'normal/NOTE_assets';
 		}
 	}
@@ -47,6 +48,7 @@ abstract NoteStyle(String) from String to String
 			case 'phone' | 'phone-alt': 'phone/NOTE_phone';
 			case 'top10': 'top10/OMGtop10awesomehi';
 			case 'pixel': 'pixel/NOTE_pixel_strumline';
+			case 'dde': 'dde/NOTE_assets';
 			default: 'normal/NOTE_strumline';
 		}
 	}
@@ -64,6 +66,8 @@ abstract NoteStyle(String) from String to String
 			case 'phone' | 'phone-alt': 'phone/NOTE_phone';
 			case 'top10': 'top10/OMGtop10awesomehi';
 			case 'pixel': 'pixel/NOTE_pixel_hold';
+			case 'dde-crud': 'dde-crud/NOTE_assets';
+			case 'dde': 'dde/NOTE_assets';
 			default: 'normal/NOTE_hold_assets';
 		}
 	}
@@ -77,6 +81,7 @@ abstract NoteStyle(String) from String to String
 		return switch (this) 
 		{
 			case 'pixel': 6;
+			case 'dde-crud': 6;
 			case '3d': 0.65;
 			default: 0.7;
 		}
@@ -91,6 +96,7 @@ abstract NoteStyle(String) from String to String
 		return switch (this)
 		{
 			case 'pixel': 6;
+			case 'dde-crud': 6;
 			default: 1;
 		}
 	}
@@ -278,16 +284,27 @@ abstract NoteStyle(String) from String to String
 				sprite.animation.add('greenholdend', [6]);
 				sprite.animation.add('redholdend', [7]);
 			case 'shape':
-				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
-				sprite.animation.addByPrefix('greenhold', 'green hold piece');
-				sprite.animation.addByPrefix('redhold', 'red hold piece');
-				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+				sprite.animation.addByPrefix('greenScroll', 'green0');
+				sprite.animation.addByPrefix('redScroll', 'red0');
+				sprite.animation.addByPrefix('blueScroll', 'blue0');
+				sprite.animation.addByPrefix('purpleScroll', 'purple0');
+				sprite.animation.addByPrefix('yellowScroll', 'yellow0');
+				sprite.animation.addByPrefix('darkScroll', 'dark0');
 
 				sprite.animation.addByPrefix('purpleholdend', 'purple hold piece');
 				sprite.animation.addByPrefix('greenholdend', 'green hold piece');
 				sprite.animation.addByPrefix('redholdend', 'red hold piece');
 				sprite.animation.addByPrefix('blueholdend', 'blue hold piece');
-			default:
+				sprite.animation.addByPrefix('yellowholdend', 'yellow hold piece');
+				sprite.animation.addByPrefix('darkholdend', 'dark hold piece');
+
+				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
+				sprite.animation.addByPrefix('greenhold', 'green hold piece');
+				sprite.animation.addByPrefix('redhold', 'red hold piece');
+				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+				sprite.animation.addByPrefix('yellowhold', 'yellow hold piece');
+				sprite.animation.addByPrefix('darkhold', 'dark hold piece');
+	        case 'dde':
 				sprite.animation.addByPrefix('purpleholdend', 'pruple end hold');
 				sprite.animation.addByPrefix('blueholdend', 'blue hold end');
 				sprite.animation.addByPrefix('greenholdend', 'green hold end');
@@ -297,6 +314,146 @@ abstract NoteStyle(String) from String to String
 				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
 				sprite.animation.addByPrefix('greenhold', 'green hold piece');
 				sprite.animation.addByPrefix('redhold', 'red hold piece');
+			case 'dde-crud':
+				sprite.animation.addByPrefix('purpleholdend', 'pruple end hold');
+				sprite.animation.addByPrefix('blueholdend', 'blue hold end');
+				sprite.animation.addByPrefix('greenholdend', 'green hold end');
+				sprite.animation.addByPrefix('redholdend', 'red hold end');
+
+				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
+				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+				sprite.animation.addByPrefix('greenhold', 'green hold piece');
+				sprite.animation.addByPrefix('redhold', 'red hold piece');
+			case '3d':
+				sprite.animation.addByPrefix('greenScroll', 'green0');
+				sprite.animation.addByPrefix('redScroll', 'red0');
+				sprite.animation.addByPrefix('blueScroll', 'blue0');
+				sprite.animation.addByPrefix('purpleScroll', 'purple0');
+				sprite.animation.addByPrefix('whiteScroll', 'white0');
+				sprite.animation.addByPrefix('yellowScroll', 'yellow0');
+				sprite.animation.addByPrefix('violetScroll', 'violet0');
+				sprite.animation.addByPrefix('blackScroll', 'black0');
+				sprite.animation.addByPrefix('darkScroll', 'dark0');
+				sprite.animation.addByPrefix('pinkScroll', 'pink0');
+				sprite.animation.addByPrefix('turqScroll', 'turq0');
+				sprite.animation.addByPrefix('emeraldScroll', 'emerald0');
+				sprite.animation.addByPrefix('lightredScroll', 'lightred0');
+
+
+				sprite.animation.addByPrefix('purpleholdend', 'pruple end hold');
+				sprite.animation.addByPrefix('greenholdend', 'green hold end');
+				sprite.animation.addByPrefix('redholdend', 'red hold end');
+				sprite.animation.addByPrefix('blueholdend', 'blue hold end');
+				sprite.animation.addByPrefix('whiteholdend', 'white hold end');
+				sprite.animation.addByPrefix('yellowholdend', 'yellow hold end');
+				sprite.animation.addByPrefix('violetholdend', 'violet hold end');
+				sprite.animation.addByPrefix('blackholdend', 'black hold end');
+				sprite.animation.addByPrefix('darkholdend', 'dark hold end');
+				sprite.animation.addByPrefix('pinkholdend', 'pink hold end');
+				sprite.animation.addByPrefix('turqholdend', 'turq hold end');
+				sprite.animation.addByPrefix('emeraldholdend', 'emerald hold end');
+				sprite.animation.addByPrefix('lightredholdend', 'lightred hold end');
+
+				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
+				sprite.animation.addByPrefix('greenhold', 'green hold piece');
+				sprite.animation.addByPrefix('redhold', 'red hold piece');
+				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+				sprite.animation.addByPrefix('whitehold', 'white hold piece');
+				sprite.animation.addByPrefix('yellowhold', 'yellow hold piece');
+				sprite.animation.addByPrefix('violethold', 'violet hold piece');
+				sprite.animation.addByPrefix('blackhold', 'black hold piece');
+				sprite.animation.addByPrefix('darkhold', 'dark hold piece');
+				sprite.animation.addByPrefix('pinkhold', 'pink hold piece');
+				sprite.animation.addByPrefix('turqhold', 'turq hold piece');
+				sprite.animation.addByPrefix('emeraldhold', 'emerald hold piece');
+				sprite.animation.addByPrefix('lightredhold', 'lightred hold piece');
+			case 'phone', 'phone-alt':
+				sprite.animation.addByPrefix('greenScroll', 'green0');
+				sprite.animation.addByPrefix('redScroll', 'red0');
+				sprite.animation.addByPrefix('blueScroll', 'blue0');
+				sprite.animation.addByPrefix('purpleScroll', 'purple0');
+				sprite.animation.addByPrefix('whiteScroll', 'white0');
+				sprite.animation.addByPrefix('yellowScroll', 'yellow0');
+				sprite.animation.addByPrefix('violetScroll', 'violet0');
+				sprite.animation.addByPrefix('blackScroll', 'black0');
+				sprite.animation.addByPrefix('darkScroll', 'dark0');
+
+
+				sprite.animation.addByPrefix('purpleholdend', 'pruple end hold');
+				sprite.animation.addByPrefix('greenholdend', 'green hold end');
+				sprite.animation.addByPrefix('redholdend', 'red hold end');
+				sprite.animation.addByPrefix('blueholdend', 'blue hold end');
+				sprite.animation.addByPrefix('whiteholdend', 'white hold end');
+				sprite.animation.addByPrefix('yellowholdend', 'yellow hold end');
+				sprite.animation.addByPrefix('violetholdend', 'violet hold end');
+				sprite.animation.addByPrefix('blackholdend', 'black hold end');
+				sprite.animation.addByPrefix('darkholdend', 'dark hold end');
+
+				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
+				sprite.animation.addByPrefix('greenhold', 'green hold piece');
+				sprite.animation.addByPrefix('redhold', 'red hold piece');
+				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+				sprite.animation.addByPrefix('whitehold', 'white hold piece');
+				sprite.animation.addByPrefix('yellowhold', 'yellow hold piece');
+				sprite.animation.addByPrefix('violethold', 'violet hold piece');
+				sprite.animation.addByPrefix('blackhold', 'black hold piece');
+				sprite.animation.addByPrefix('darkhold', 'dark hold piece');
+			case 'top10':
+				sprite.animation.addByPrefix('greenScroll', 'green0');
+				sprite.animation.addByPrefix('redScroll', 'red0');
+				sprite.animation.addByPrefix('blueScroll', 'blue0');
+				sprite.animation.addByPrefix('purpleScroll', 'purple0');
+				sprite.animation.addByPrefix('purpleholdend', 'pruple end hold');
+				sprite.animation.addByPrefix('greenholdend', 'green hold end');
+				sprite.animation.addByPrefix('redholdend', 'red hold end');
+				sprite.animation.addByPrefix('blueholdend', 'blue hold end');
+				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
+				sprite.animation.addByPrefix('greenhold', 'green hold piece');
+				sprite.animation.addByPrefix('redhold', 'red hold piece');
+				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+			default:
+				sprite.animation.addByPrefix('greenScroll', 'green0');
+				sprite.animation.addByPrefix('redScroll', 'red0');
+				sprite.animation.addByPrefix('blueScroll', 'blue0');
+				sprite.animation.addByPrefix('purpleScroll', 'purple0');
+				sprite.animation.addByPrefix('whiteScroll', 'white0');
+				sprite.animation.addByPrefix('yellowScroll', 'yellow0');
+				sprite.animation.addByPrefix('violetScroll', 'violet0');
+				sprite.animation.addByPrefix('blackScroll', 'black0');
+				sprite.animation.addByPrefix('darkScroll', 'dark0');
+				sprite.animation.addByPrefix('pinkScroll', 'pink0');
+				sprite.animation.addByPrefix('turqScroll', 'turq0');
+				sprite.animation.addByPrefix('emeraldScroll', 'emerald0');
+				sprite.animation.addByPrefix('lightredScroll', 'lightred0');
+
+
+				sprite.animation.addByPrefix('purpleholdend', 'pruple end hold');
+				sprite.animation.addByPrefix('greenholdend', 'green hold end');
+				sprite.animation.addByPrefix('redholdend', 'red hold end');
+				sprite.animation.addByPrefix('blueholdend', 'blue hold end');
+				sprite.animation.addByPrefix('whiteholdend', 'white hold end');
+				sprite.animation.addByPrefix('yellowholdend', 'yellow hold end');
+				sprite.animation.addByPrefix('violetholdend', 'violet hold end');
+				sprite.animation.addByPrefix('blackholdend', 'black hold end');
+				sprite.animation.addByPrefix('darkholdend', 'dark hold end');
+				sprite.animation.addByPrefix('pinkholdend', 'pink hold end');
+				sprite.animation.addByPrefix('turqholdend', 'turq hold end');
+				sprite.animation.addByPrefix('emeraldholdend', 'emerald hold end');
+				sprite.animation.addByPrefix('lightredholdend', 'lightred hold end');
+
+				sprite.animation.addByPrefix('purplehold', 'purple hold piece');
+				sprite.animation.addByPrefix('greenhold', 'green hold piece');
+				sprite.animation.addByPrefix('redhold', 'red hold piece');
+				sprite.animation.addByPrefix('bluehold', 'blue hold piece');
+				sprite.animation.addByPrefix('whitehold', 'white hold piece');
+				sprite.animation.addByPrefix('yellowhold', 'yellow hold piece');
+				sprite.animation.addByPrefix('violethold', 'violet hold piece');
+				sprite.animation.addByPrefix('blackhold', 'black hold piece');
+				sprite.animation.addByPrefix('darkhold', 'dark hold piece');
+				sprite.animation.addByPrefix('pinkhold', 'pink hold piece');
+				sprite.animation.addByPrefix('turqhold', 'turq hold piece');
+				sprite.animation.addByPrefix('emeraldhold', 'emerald hold piece');
+				sprite.animation.addByPrefix('lightredhold', 'lightred hold piece');
 		}
 		sprite.updateAnimations();
 	}
@@ -316,7 +473,7 @@ abstract NoteStyle(String) from String to String
 				sprite.animation.add('confirm', [12 + ID, 16 + ID], 12, false);
 				sprite.animation.add('confirm-hold', [12 + ID, 16 + ID], 12, false);
 			default:
-				var anims:Array<String> = ['left', 'down', 'up', 'right'];
+				var anims:Array<String> = ['left', 'down', 'up', 'right', 'pink', 'turq', 'emerald', 'lightred', 'yellow', 'violet', 'black', 'white', 'orange', 'dark'];
 
 				sprite.animation.addByPrefix('static', 'arrow${anims[ID].toUpperCase()}');
 				sprite.animation.addByPrefix('pressed', '${anims[ID]} press', 24, false);

@@ -23,7 +23,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.util.FlxSignal;
-import flixel.text.FlxText;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import graphics.GameCamera;
 import lime.math.Vector2;
@@ -66,9 +65,7 @@ import util.FileUtil;
 import util.MathUtil;
 import util.TweenUtil;
 import util.tools.Preloader;
-#if desktop
 import api.Discord.DiscordClient;
-#end
 
 /**
  * The parameters used to initalize PlayState.
@@ -220,224 +217,46 @@ class PlayState extends MusicBeatState
 	 * Changes the y position of all of the HUD elements based on this type.
 	 */
 	public var scrollType(default, set):String;
-	
-		
-public var botplayEnabled:Bool = false;
-private var botplayTxt:FlxText;
-public static var botplay:Bool = false;
-
-private function botplayHit(note:Note)
+	var shaggyVocals:GameSound;
+	var isShaggyMode:Bool = false;
+	var mania:Int = 0;
+// ===================================================
+// AUTO BOTPLAY HIT SYSTEM (Vs D&B Volume 1)
+// ===================================================
+function botplayAutoHit():Void
 {
-    // Mark as hit
-    note.hasBeenHit = true;
-
-    // Internal scoring logic
-    playingStrumline.hitNote(note);
-
-    // Trigger player animation
-    if (playingChar != null)
+    // Loop all spawned notes on the player's strumline
+    playingStrumline.forEachNote(function(note:Note)
     {
-        playingChar.sing(note.direction);
+        if (note == null) return;
+
+        // Only player notes
+        if (!note.mustPress) return;
+
+        // Must be hittable
+        if (!note.canBeHit) return;
+
+        // Trigger correct hit system
+        playingStrumline.hitNote(note);
+
+        // Custom animation override (optional)
+        var anim = botGetSingAnim(note.direction);
+        playingChar.playAnim(anim, true);
         playingChar.holdTimer = 0;
-    }
-}
-
-/**
- * Auto-player for D&B engine (FULL + FIXED FOR SUSTAINS)
- */
-public function botplayAutoHit()
-{
-    if (playerStrums == null)
-        return;
-
-    // Show BOTPLAY text
-    botplayTxt.visible = true;
-
-    // 1. ALL hittable "tap" notes
-    var possible:Array<Note> = playerStrums.getPossibleNotes();
-
-    // Sort closest → furthest
-    haxe.ds.ArraySort.sort(possible, function(a, b)
-    {
-        return Reflect.compare(
-            Math.abs(Conductor.instance.songPosition - a.strumTime),
-            Math.abs(Conductor.instance.songPosition - b.strumTime)
-        );
-    });
-
-    // ================================
-    //  TAP NOTES
-    // ================================
-    for (note in possible)
-    {
-        if (note == null) continue;
-        if (note.hasBeenHit) continue;
-
-        // SUSTAIN HEAD (first part)
-        if (note.sustainNote != null)
-        {
-            // Hit the head
-            playerStrums.pressKey(note.direction);
-            playerStrums.hitNote(note);
-            continue;
-        }
-		// BOTPLAY NOTE LOGIC WITH PHONE SUPPORT
-playerStrums.pressKey(note.direction);
-playerStrums.hitNote(note);
-
-// --- PHONE NOTE DODGE PATCH ---
-if (note.noteStyle == "phone" || note.noteStyle == "phone-alt")
-{
-    // play BF/Player dodge animation
-    if (playingChar.animation.getByName("dodge") != null)
-        playingChar.playAnim("dodge", true);
-    else if (playingChar.animation.getByName("hey") != null)
-        playingChar.playAnim("hey", true);
-    else
-        playingChar.sing(note.direction); // fallback
-
-    // play opponent (dad) throwing animation
-    if (opposingChar.animation.getByName("singThrow") != null)
-        opposingChar.playAnim("singThrow", true);
-    else
-        opposingChar.playAnim("singSmash", true);
-
-    // GF cheer if she can
-    if (gf != null && gf.animation.getByName("cheer") != null)
-        gf.playAnim("cheer", true);
-}
-// --------------------------------
-
-playerStrums.releaseKey(note.direction);
-
-    }
-
-    // ================================
-    //  SUSTAIN NOTE HOLDING
-    // ================================
-    playerStrums.forEachHoldNote(function(s:SustainNote)
-    {
-        if (s == null) return;
-
-        var now = Conductor.instance.songPosition;
-
-        // Sustain active window
-        var start = s.strumTime;
-        var end   = s.strumTime + s.fullSustainLength;
-
-        if (now >= start && now <= end)
-        {
-            // Hold key while inside sustain window
-            playerStrums.pressKey(s.direction);
-
-            if (!s.hasBeenHit)
-            {
-                s.hasBeenHit = true;
-                s.hasMissed = false;
-            }
-
-            // Play strum hold animation
-            playerStrums.strums.members[s.direction].holdConfirm();
-        }
-        else if (now > end)
-        {
-            // Release key when sustain ends
-            playerStrums.releaseKey(s.direction);
-        }
     });
 }
 
-/**
- * Automatically plays notes for the player strumline.
- */
- 
-public var strumlineOpponent:Strumline;
-public var strumlinePlayer:Strumline;
-
-function updateBotplay(elapsed:Float)
+// return correct animation name
+function botGetSingAnim(dir:Int):String
 {
-    if (!botplay) return;
-
-    // Your player strumline:
-    var pl:Strumline = strumlinePlayer; // adjust if player index differs
-
-    // Get all notes that are hittable
-    var possibleNotes:Array<Note> = pl.getPossibleNotes();
-
-    // Sort by closest to hit
-    possibleNotes.sort(function(a, b) {
-        return Reflect.compare(
-            Math.abs(Conductor.instance.songPosition - a.strumTime),
-            Math.abs(Conductor.instance.songPosition - b.strumTime)
-        );
-    });
-
-    // ---- HIT TAPS ----
-    for (note in possibleNotes)
+    return switch (dir)
     {
-        if (note == null) continue;
-        if (note.hasBeenHit) continue;
-if (note.sustainNote == null)
-{
-    pl.pressKey(note.direction);
-    pl.hitNote(note);
-
-    // --- PHONE NOTE AUTO-DODGE ---
-    if (note.noteStyle == "phone" || note.noteStyle == "phone-alt")
-    {
-        if (playingChar.animation.getByName("dodge") != null)
-            playingChar.playAnim("dodge", true);
-        else if (playingChar.animation.getByName("hey") != null)
-            playingChar.playAnim("hey", true);
-
-        if (opposingChar.animation.getByName("singThrow") != null)
-            opposingChar.playAnim("singThrow", true);
-        else
-            opposingChar.playAnim("singSmash", true);
-
-        if (gf != null && gf.animation.getByName("cheer") != null)
-            gf.playAnim("cheer", true);
+        case 0: "singLEFT";
+        case 1: "singDOWN";
+        case 2: "singUP";
+        case 3: "singRIGHT";
+        default: "idle";
     }
-    // -----------------------------
-
-    pl.releaseKey(note.direction);
-}
-        else
-        {
-            // HIT START OF HOLD
-            if (!note.sustainNote.hasBeenHit)
-            {
-                pl.pressKey(note.direction);
-                pl.hitNote(note);
-            }
-        }
-    }
-
-    // ---- HOLD SUSTAINS ----
-    pl.forEachHoldNote(function(hold:SustainNote)
-    {
-        if (hold == null) return;
-
-        var now = Conductor.instance.songPosition;
-
-        // Sustain active window
-        if (now >= hold.strumTime && now <= hold.strumTime + hold.fullSustainLength)
-        {
-            // keep key held
-            pl.pressKey(hold.direction);
-
-            if (!hold.hasBeenHit)
-            {
-                hold.hasBeenHit = true;
-                hold.hasMissed = false;
-            }
-        }
-        else
-        {
-            // release when finished
-            pl.releaseKey(hold.direction);
-        }
-    });
 }
 
 	function set_scrollType(value:String):String
@@ -822,10 +641,13 @@ if (note.sustainNote == null)
 	var noteLimboFrames:Int;
 	var pressingKey5Global:Bool;
 
+	public var cpuControlled:Bool = false;
+
 	/**
 	 * Initalizes a new PlayState instance.
 	 * @param params The parameters to initalize PlayState with.
 	 */
+
 	public function new(?params:PlayStateParams)
 	{
 		super();
@@ -878,40 +700,10 @@ if (note.sustainNote == null)
 		initalizeCamera();
 
 		initalizeUI();
-		
-		var font:String = Paths.font("comic.ttf");
-
-botplayTxt = new FlxText(
-    healthBar.x + healthBar.width / 2 - 75,
-    healthBar.y + (FlxG.save.data.downscroll ? 100 : -100),
-    0,
-    "BOTPLAY",
-    20
-);
-
-botplayTxt.setFormat(
-    Paths.font("comic.ttf"),
-    42,
-    FlxColor.WHITE,
-    CENTER,
-    OUTLINE,
-    FlxColor.BLACK
-);
-
-botplayTxt.scrollFactor.set(0, 0); // must supply values
-botplayTxt.borderSize = 3;
-botplayTxt.visible = botplay;
-botplayTxt.cameras = [camHUD];
-
-add(botplayTxt);
 
 		generateSong();
 
 		prepareSong();
-
-		#if mobileC
-		initalizeMobileControls();
-		#end
 
 		super.create();
 	}
@@ -922,29 +714,13 @@ add(botplayTxt);
 
 		elapsedtime += elapsed;
 
-		if ((isInCutscene && FlxG.keys.justPressed.ESCAPE #if android || FlxG.android.justReleased.BACK #end) || (FlxG.keys.justPressed.ENTER #if android || FlxG.android.justReleased.BACK #end && Countdown.countdownStarted && canPause))
+		if ((isInCutscene && FlxG.keys.justPressed.ESCAPE) || (FlxG.keys.justPressed.ENTER && Countdown.countdownStarted && canPause))
 			runPause();
-	
- botplayTxt.visible = Preferences.botplay;
 
-	// BOTPLAY INPUT CONTROLLER
-	if (!isInCutscene) {
-if (botplay) {
-botplayTxt.visible = true;
- botplayAutoHit();
-}
-else {
-botplayTxt.visible = true;
- botplayAutoHit();
-}
-}
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			// Pressing seven will enable custom callback functionaility. 
-			// Cancelling it will allow custom behavior that isn't going to the chart editor.
-			// Not sure if this is necessary to warrant it's own script event.
-
 			var event = new ScriptEvent(PRESS_SEVEN, true);
+
 			dispatchEvent(event);
 			
 			if (event.eventCanceled)
@@ -1071,6 +847,13 @@ botplayTxt.visible = true;
 			}
 		});
 		
+		// ===================================================
+// BOTPLAY: auto-hit notes when cpuControlled is true
+// ===================================================
+if (cpuControlled)
+{
+    botplayAutoHit();
+}
 		handleInputs();
 		processNotes(elapsed);
 	}
@@ -1196,9 +979,7 @@ botplayTxt.visible = true;
 				currentDialogue.pauseMusic();
 			}
 
-			#if desktop
 			changePresence(PAUSED);
-			#end
 
 			if (Countdown.countdownStarted && !Countdown.finished)
 				Countdown.paused = true;
@@ -1235,9 +1016,7 @@ botplayTxt.visible = true;
 			});
 			paused = false;
 
-			#if desktop
 			changePresence(NORMAL(true, false));
-			#end
 		}
 
 		super.closeSubState();
@@ -1324,7 +1103,7 @@ botplayTxt.visible = true;
 					SoundController.cache(Paths.sound('note_click'));
 				}
 			case 'minimalUI':
-				#if !mobile Main.fps.visible = value ? false : Preferences.debugUI; #end
+				Main.fps.visible = value ? false : Preferences.debugUI;
 		}
 		onPreferenceChangedPost.dispatch(preference, value);
 	}
@@ -1526,21 +1305,6 @@ botplayTxt.visible = true;
 	}
 
 	/**
-	 * Initalizes mobile controls.
-	**/
-	function initalizeMobileControls():Void
-	{
-		#if mobileC
-		addMobileControls();
-		mobileControls.visible = true;
-
-		if (shapeNoteSongs.contains(currentSong.id.toLowerCase()))
-			addVirtualPad(NONE, A);
-			addVirtualPadCamera();
-		#end
-	}
-
-	/**
 	 * Initalizes the HUD, and any necessary user interface.
 	 */
 	function initalizeUI():Void
@@ -1601,6 +1365,7 @@ botplayTxt.visible = true;
 		dadStrums.x = 100;
 		dadStrums.cameras = [camHUD];
 		dadStrums.generateNotes(currentChart.notes);
+		dadStrums.strumAmount = 4;
 		add(dadStrums);
 		dadStrums.onNoteSpawn.add(onStrumlineNoteSpawn);
 
@@ -1608,9 +1373,96 @@ botplayTxt.visible = true;
 		playerStrums.x = FlxG.width - playerStrums.width - 100;
 		playerStrums.cameras = [camHUD];
 		playerStrums.generateNotes(currentChart.notes);
+		playerStrums.strumAmount = 4;
 		add(playerStrums);
 		playerStrums.onNoteSpawn.add(onStrumlineNoteSpawn);
+
+		// If this is true it means that the current variation we're on is a custom one.
+		var customVariation:Bool = (this.currentVariation == Song.validateVariation(params.targetVariation) && this.currentVariation != Song.DEFAULT_VARIATION);
 		
+		var customChar:Null<String> = (PlayStatePlaylist.isStoryMode || FreeplayState.skipSelect.contains(currentSong.id.toLowerCase()) || customVariation) ? null : CharacterSelect.selectedCharacter;
+
+		var bfChar:String = bfOverride != null ? bfOverride : customChar != null ? customChar : currentChart.player;
+		boyfriend = Character.create(770, 450, bfChar, PLAYER);
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "warmup")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+		
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "house")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "insanity")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+				
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "polgonized")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "blocked")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "corn-theft")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+ 
+                if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "maze")
+		{
+			playerStrums.strumAmount = 9;
+			dadStrums.strumAmount = 9;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "splitathon")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "supernovea")
+		{
+			playerStrums.strumAmount = 9;
+			dadStrums.strumAmount = 9;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "glitch")
+		{
+			playerStrums.strumAmount = 9;
+			dadStrums.strumAmount = 9;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "master")
+		{
+			playerStrums.strumAmount = 12;
+			dadStrums.strumAmount = 12;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "roofs")
+		{
+			playerStrums.strumAmount = 7;
+			dadStrums.strumAmount = 7;
+		}
+
+		if (isShaggyMode && (bfChar == "shaggy" || bfChar == "rshaggy" || bfChar == "godshaggy" || bfChar == "sshaggy") && currentSong.id.toLowerCase() == "mealie")
+		{
+			playerStrums.strumAmount = 6;
+			dadStrums.strumAmount = 6;
+		}
+
 		opposingStrumline.onNoteHit.add(function(note:Note)
 		{
 			opponentSing(opposingChar, note);
@@ -1951,9 +1803,7 @@ botplayTxt.visible = true;
 			SoundController.playMusic(currentChart.getInstrumentalPath(), 1, false);
 			vocals.play();
 		}
-		#if desktop
 		changePresence(NORMAL(true, false));
-		#end
 
 		SoundController.music.onComplete = endSong;
 	}
@@ -1977,7 +1827,7 @@ botplayTxt.visible = true;
 		var downR = controls.DOWN_R;
 		var leftR = controls.LEFT_R;
 		
-		var key5 = shapeNoteSongs != null && shapeNoteSongs.contains(currentSong.id.toLowerCase()) && (controls.KEY5 #if mobileC || (virtualPad.buttonA != null && virtualPad.buttonA.pressed) #end);
+		var key5 = controls.KEY5 && shapeNoteSongs.contains(currentSong.id.toLowerCase());
 
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
 		var releaseArray:Array<Bool> = [leftR, downR, upR, rightR];
@@ -2270,9 +2120,7 @@ botplayTxt.visible = true;
 		
 		Conductor.instance.update();
 
-		#if desktop
 		changePresence(NORMAL(true, false));
-		#end
 	}
 
 	/**
@@ -2455,9 +2303,7 @@ botplayTxt.visible = true;
 		}
 		ratings.ratingPopup(daRating, combo, note.noteStyle);
 
-		#if desktop
 		changePresence(NORMAL(true, false));
-		#end
 	}
 
 	function onStrumlineNoteSpawn(note:Note)
@@ -2606,9 +2452,7 @@ botplayTxt.visible = true;
 		totalPlayed += 1;
 		accuracy = totalNotesHit / totalPlayed * 100;
 
-		#if desktop
 		changePresence(NORMAL(true, false));
-		#end
 	}
 	
 	/**
@@ -2626,9 +2470,7 @@ botplayTxt.visible = true;
 		SoundController.music.stop();
 
 		removeSignals();
-		#if desktop
 		changePresence(GAMEOVER);
-		#end
 
 		var event = new ScriptEvent(GAME_OVER, true);
 		dispatchEvent(event);
@@ -2780,7 +2622,6 @@ botplayTxt.visible = true;
 	 * Changes the Discord Rich Presence based on a specific type.
 	 * @param type The type to change it based off.
 	 */
-	#if desktop
 	function changePresence(type:api.Discord.RPCType):Void
 	{
 		if (currentChart == null)
@@ -2811,7 +2652,6 @@ botplayTxt.visible = true;
 				DiscordClient.changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp, largeImageKey);
 		}
 	}
-	#end
 
 	/**
 	 * Handles the singing for an opponent character.
