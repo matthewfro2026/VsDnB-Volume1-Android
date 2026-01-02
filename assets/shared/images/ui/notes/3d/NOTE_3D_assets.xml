@@ -1,9 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="NOTE_3D_assets.png">
-	<!-- Created with Adobe Animate version 23.0.0.407 -->
-	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="blue0000" x="0" y="0" width="157" height="164"/>
-	<SubTexture name="green0000" x="162" y="0" width="158" height="163"/>
-	<SubTexture name="purple0000" x="325" y="0" width="159" height="169"/>
-	<SubTexture name="red0000" x="0" y="174" width="161" height="169"/>
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="violet0000" x="323" y="172" width="161" height="168" frameX="2" frameY="2" frameWidth="157" frameHeight="164"/>
+	<SubTexture name="black0000" x="490" y="167" width="161" height="167" frameX="2" frameY="2" frameWidth="158" frameHeight="163"/>
+	<SubTexture name="yellow0000" x="0" y="172" width="162" height="172" frameX="1" frameY="1" frameWidth="159" frameHeight="169"/>
+	<SubTexture name="dark0000" x="0" y="0" width="164" height="172" frameX="1" frameY="2" frameWidth="161" frameHeight="169"/>
+	<SubTexture name="blue0000" x="162" y="172" width="161" height="168" frameX="2" frameY="2" frameWidth="157" frameHeight="164"/>
+	<SubTexture name="green0000" x="490" y="0" width="161" height="167" frameX="2" frameY="2" frameWidth="158" frameHeight="163"/>
+	<SubTexture name="purple0000" x="328" y="0" width="162" height="172" frameX="1" frameY="1" frameWidth="159" frameHeight="169"/>
+	<SubTexture name="red0000" x="164" y="0" width="164" height="172" frameX="1" frameY="2" frameWidth="161" frameHeight="169"/>
 </TextureAtlas>
