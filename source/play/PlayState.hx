@@ -65,7 +65,10 @@ import util.FileUtil;
 import util.MathUtil;
 import util.TweenUtil;
 import util.tools.Preloader;
+
+#if desktop
 import api.Discord.DiscordClient;
+#end
 
 /**
  * The parameters used to initalize PlayState.
@@ -2737,4 +2740,5 @@ if (cpuControlled)
 		updateAccuracy();
 	}
 }
+
 
