@@ -1,13 +1,42 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TextureAtlas imagePath="NOTE_hold_assets.png">
-	<!-- Created with Adobe Animate version 21.0.6.41649 -->
-	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="blue hold end0000" x="0" y="0" width="50" height="64"/>
-	<SubTexture name="blue hold piece0000" x="55" y="0" width="50" height="44"/>
-	<SubTexture name="green hold end0000" x="110" y="0" width="50" height="64"/>
-	<SubTexture name="green hold piece0000" x="165" y="0" width="50" height="44"/>
-	<SubTexture name="pruple end hold0000" x="220" y="0" width="50" height="64"/>
-	<SubTexture name="purple hold piece0000" x="275" y="0" width="50" height="44"/>
-	<SubTexture name="red hold end0000" x="330" y="0" width="50" height="64"/>
-	<SubTexture name="red hold piece0000" x="385" y="0" width="50" height="44"/>
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="blue hold end0000" x="0" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="blue hold piece0000" x="54" y="252" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="cobalt hold end0000" x="108" y="68" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="cobalt hold piece0000" x="324" y="0" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="dark hold end0000" x="162" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="dark hold piece0000" x="324" y="192" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="darkorange hold end0000" x="162" y="68" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="darkorange hold piece0000" x="108" y="252" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="darkpurple hold end0000" x="216" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="darkpurple hold piece0000" x="162" y="252" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="darkred hold end0000" x="270" y="68" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="darkred hold piece0000" x="216" y="204" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="emerald hold end0000" x="54" y="68" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="emerald hold piece0000" x="324" y="48" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="green hold end0000" x="216" y="68" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="green hold piece0000" x="270" y="204" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="lightred hold end0000" x="162" y="136" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="lightred hold piece0000" x="108" y="204" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="lime hold end0000" x="270" y="136" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="lime hold piece0000" x="270" y="252" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="orange hold end0000" x="54" y="136" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="orange hold piece0000" x="162" y="204" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="pink hold end0000" x="108" y="136" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="pink hold piece0000" x="216" y="252" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="purple hold end0000" x="108" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="pruple end hold0000" x="108" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="purple hold piece0000" x="0" y="204" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="red hold end0000" x="0" y="68" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="red hold piece0000" x="0" y="252" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="turq hold end0000" x="216" y="136" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="turq hold piece0000" x="54" y="204" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="violet hold end0000" x="270" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="violet hold piece0000" x="324" y="96" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="white hold end0000" x="0" y="136" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="white hold piece0000" x="324" y="240" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
+	<SubTexture name="yellow hold end0000" x="54" y="0" width="54" height="68" frameX="2" frameY="2" frameWidth="50" frameHeight="64"/>
+	<SubTexture name="yellow hold piece0000" x="324" y="144" width="54" height="48" frameX="2" frameY="2" frameWidth="50" frameHeight="44"/>
 </TextureAtlas>
